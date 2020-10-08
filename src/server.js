@@ -1,11 +1,15 @@
 const express = require("express");
 const connectDB = require("./config/mongodb");
+const cors = require("cors");
 
 //Create server
 const app = express();
 
 //Connect to mongo db
 connectDB();
+
+//Enable cors
+app.use(cors());
 
 //Enable express.json. (this is equivalent to bodyParser)
 app.use(express.json({ extended: true }));

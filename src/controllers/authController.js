@@ -50,3 +50,15 @@ exports.userAuthentication = async (req, res) => {
     console.log(error);
   }
 };
+
+exports.getAuthenticatedUser = async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id).select("-password"); //select("-password"): Give me all user data except the password
+    res.json(user);
+  } catch (error) {
+    console.log(error);
+    res
+      .status(500)
+      .json({ msg: "Error in auth controller, getAuthenticatedUser method" });
+  }
+};
