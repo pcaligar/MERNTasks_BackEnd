@@ -42,7 +42,8 @@ exports.createTask = async (req, res) => {
 exports.getTasks = async (req, res) => {
   try {
     //Destructuring to get the project
-    const { project } = req.body;
+    const { project } = req.query; //Use req.query insted of req.body because from the frontEnd the parameters of the query (project) is send with "PARAMS"
+    //console.log(req.query);
 
     //Checking if the project exist
     const existingProject = await Project.findById(project);
@@ -93,10 +94,8 @@ exports.updateTask = async (req, res) => {
 
     //Create a task with the new information
     const newTask = {};
-    //If the user send the name to update it, replaces it
-    if (name) newTask.name = name;
-    //If the user send the state to update it, replaces it
-    if (state) newTask.state = state;
+    newTask.name = name;
+    newTask.state = state;
 
     const taskToReturn = await Task.findOneAndUpdate(
       { _id: req.params.id },
@@ -116,7 +115,7 @@ exports.updateTask = async (req, res) => {
 exports.deleteTask = async (req, res) => {
   try {
     //Destructuring to get the project, name and state
-    const { project } = req.body;
+    const { project } = req.query; //Use req.query insted of req.body because from the frontEnd the parameters of the query (project) is send with "PARAMS"
 
     //Checking if the project exist
     const existingProject = await Project.findById(project);
